@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Add styles for game container and falling alphabets */
+      #gameContainer {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        border: 1px solid #000;
+        overflow: hidden;
+      }
+
+      .fallingAlphabet {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: #3498db;
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        line-height: 30px;
+      }
+    </style>
+    <title>Alphabet Game</title>
+  </head>
+  <body>
+    <ul>
+      <!-- Your existing navigation menu -->
+    </ul>
+    <div id="main"></div>
+    <button id="Kg-1">Kg-1</button>
+    <button>Kg-2</button>
+    <button>Grade-1</button>
+    <button>Grade-2</button>
+
+    <div id="gameContainer"></div>
+
+    <script>
+      // Function to generate a random alphabet
+      function getRandomAlphabet() {
+        const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const randomIndex = Math.floor(Math.random() * alphabets.length);
+        return alphabets.charAt(randomIndex);
+      }
+
+      // Function to create falling alphabet element
+      function createFallingAlphabet() {
+        const alphabet = getRandomAlphabet();
+        const fallingAlphabet = document.createElement("div");
+        fallingAlphabet.className = "fallingAlphabet";
+        fallingAlphabet.innerText = alphabet;
+        fallingAlphabet.style.left = `${Math.random() * 270}px`; // Random horizontal position
+        document.getElementById("gameContainer").appendChild(fallingAlphabet);
+
+        // Check if the caught alphabet matches the expected order
+        fallingAlphabet.addEventListener("click", function () {
+          if (alphabet === expectedAlphabet) {
+            this.remove(); // Remove the caught alphabet
+            expectedAlphabet = getRandomAlphabet(); // Get the next expected alphabet
+          }
+        });
+      }
+
+      let expectedAlphabet = getRandomAlphabet(); // Initialize the expected alphabet
+
+      // Function to start the game
+      function startGame() {
+        setInterval(createFallingAlphabet, 1000); // Create falling alphabet every second
+      }
+
+      const button = document.getElementById("Kg-1");
+      button.addEventListener("click", startGame);
+    </script>
+  </body>
+</html>
